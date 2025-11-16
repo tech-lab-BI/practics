@@ -1,6 +1,6 @@
-#include<stdio.h> // circular queue
+#include<stdio.h>
 #include<stdlib.h>
-#define capacity 5
+#define capacity 3
 
 int quene[capacity];
 int front=-1,rear=-1;
@@ -16,10 +16,10 @@ void main(){
 	while(1){
 		printf("\n+++++++++++++\n");
 		printf("  :: MENU ::\n");
-		printf(" 	1. enquene\n");
-		printf("	  2. dequene\n");
-		printf(" 	3. display\n");
-		printf("	  4. exit\n");
+		printf("1. enquene\n");
+		printf("2. dequene\n");
+		printf("3. display\n");
+		printf("4. exit\n");
 		printf("Eneter choice :: ");
 		scanf("%d",&ch);
 		printf("\n+++++++++++++++\n");
@@ -47,16 +47,13 @@ void main(){
 					printf("quene empty !!!!!!!!!!!!!");
 				}
 				else{
-					if(isempty()){
-						printf("quene empty !!!!!!!!!!");
-					}
-					else{
-						display();
-					}
+					display();
 				}
 				break;
-			default:
+			case 4:
 				exit(0);
+			default:
+				printf("wrong chioce");
 		}
 	}
 }
@@ -71,45 +68,33 @@ int isempty(){
 }
 
 int isfull(){
-	if((front == 0) && (rear == (capacity-1))){
+	if(rear == (capacity-1)){
 		return 1;
 	}
 	else{
 		return 0;
 	}
 }
+
 void enquene(int x){
-	int i;
-	if(isempty()){
-		front = rear = 0;
-	}
-	else if(front != 0){
-		for(i=front-1;i<rear;i++){
-			quene[i] = quene[i+1];
-		}
-		front--;
-	}
-	else{
-		rear++;
-	}
-	quene[rear] = x;
+	if(isempty())
+		front = 0;
+	quene[++rear] = x;
 }
 
 int dequene(){
-	int tem;
-	tem = quene[front];
-	if(isempty()){
-		front = rear = -1;
+	int tem = quene[front];
+	int i;
+	for(i=front;i<rear;i++){
+		quene[i] = quene[i+1];
 	}
-	else{
-		front++;
-	}
+	rear--;
 	return tem;
 }
 
 void display(){
 	int i;
-	printf("front                    rear\n");
+	printf("Queue element : ");
 	for(i=front;i<=rear;i++){
 		printf("%d  ",quene[i]);
 	}
